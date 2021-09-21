@@ -1,5 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
+import { useRouter } from 'next/router'
+import nookies from 'nookies';
 import NextLink from 'next/link';
 
 const BASE_URL = 'http://alurakut.vercel.app/';
@@ -21,6 +23,7 @@ function Link({ href, children, ...props }) {
 // ================================================================================================================
 export function AlurakutMenu({ githubUser }) {
   const [isMenuOpen, setMenuState] = React.useState(false);
+  const router = useRouter()
   return (
     <AlurakutMenu.Wrapper isMenuOpen={isMenuOpen}>
       <div className="container">
@@ -35,9 +38,16 @@ export function AlurakutMenu({ githubUser }) {
         </nav>
 
         <nav>
-          <a href={`/logout`}>
+          <span style={{fontSize: 12, color: 'white', padding: '10px 16px', position: 'relative', cursor: 'pointer'}}
+            onClick={(e) => 
+            {
+              e.preventDefault
+              nookies.destroy(null, 'USER_TOKEN')
+              router.push('/login')
+            }}
+          >
             Sair
-          </a>
+          </span>
           <div>
             <input placeholder="Pesquisar no Orkut" />
           </div>
@@ -185,6 +195,7 @@ function AlurakutMenuProfileSidebar({ githubUser }) {
 // AlurakutProfileSidebarMenuDefault
 // ================================================================================================================
 export function AlurakutProfileSidebarMenuDefault() {
+  const router = useRouter()
   return (
     <AlurakutProfileSidebarMenuDefault.Wrapper>
       <nav>
@@ -211,16 +222,23 @@ export function AlurakutProfileSidebarMenuDefault() {
           <img src={`${BASE_URL}/icons/plus.svg`} />
             GitHub Trends
           </a>
-        <a href="/logout">
+        <span 
+          href="#" 
+          onClick={(e) => 
+            {
+              e.preventDefault
+              nookies.destroy(null, 'USER_TOKEN')
+              router.push('/login')
+            }}>
           <img src={`${BASE_URL}//icons/logout.svg`} />
             Sair
-          </a>
+        </span>
       </nav>
     </AlurakutProfileSidebarMenuDefault.Wrapper>
   )
 }
 AlurakutProfileSidebarMenuDefault.Wrapper = styled.div`
-  a {
+  a, span {
     font-size: 12px;
     color: #2E7BB4;
     margin-bottom: 16px;
@@ -228,6 +246,7 @@ AlurakutProfileSidebarMenuDefault.Wrapper = styled.div`
     align-items: center;
     justify-content: flex-start;
     text-decoration: none;
+    cursor: pointer;
     img {
       width: 16px;
       height: 16px;

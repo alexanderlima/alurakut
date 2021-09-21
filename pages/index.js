@@ -102,8 +102,6 @@ export default function Home(props) {
 
   }, [])
 
-  console.log('seguidores antes do return', seguidores);
-
   // 1 - Criar um box que vai ter um map, baseado nos items do array
   // que pegamos do GitHub
 
@@ -129,9 +127,6 @@ export default function Home(props) {
             <form onSubmit={function handleCriaComunidade(e) {
                 e.preventDefault();
                 const dadosDoForm = new FormData(e.target);
-
-                console.log('Campo: ', dadosDoForm.get('title'));
-                console.log('Campo: ', dadosDoForm.get('image'));
 
                 const comunidade = {
                   title: dadosDoForm.get('title'),
